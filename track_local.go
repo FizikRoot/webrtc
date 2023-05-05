@@ -111,4 +111,7 @@ type TrackLocal interface {
 
 	// Kind controls if this TrackLocal is audio or video
 	Kind() RTPCodecType
+
+	// SSRC gets the SSRC of the track
+	SSRC() SSRC
 }

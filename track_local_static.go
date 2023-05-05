@@ -32,6 +32,7 @@ type TrackLocalStaticRTP struct {
 	bindings          []trackBinding
 	codec             RTPCodecCapability
 	id, rid, streamID string
+	ssrc              SSRC
 }
 
 // NewTrackLocalStaticRTP returns a TrackLocalStaticRTP.
@@ -54,6 +55,13 @@ func NewTrackLocalStaticRTP(c RTPCodecCapability, id, streamID string, options .
 func WithRTPStreamID(rid string) func(*TrackLocalStaticRTP) {
 	return func(t *TrackLocalStaticRTP) {
 		t.rid = rid
+	}
+}
+
+// WithSSRC sets the RTP ssrc for this TrackLocalStaticRTP.
+func WithSSRC(ssrc SSRC) func(*TrackLocalStaticRTP) {
+	return func(t *TrackLocalStaticRTP) {
+		t.ssrc = ssrc
 	}
 }
 
@@ -116,6 +124,10 @@ func (s *TrackLocalStaticRTP) Kind() RTPCodecType {
 	default:
 		return RTPCodecType(0)
 	}
+}
+
+func (s *TrackLocalStaticRTP) SSRC() SSRC {
+	return s.ssrc
 }
 
 // Codec gets the Codec of the track
@@ -196,6 +208,7 @@ type TrackLocalStaticSample struct {
 	sequencer  rtp.Sequencer
 	rtpTrack   *TrackLocalStaticRTP
 	clockRate  float64
+	ssrc       SSRC
 }
 
 // NewTrackLocalStaticSample returns a TrackLocalStaticSample
@@ -229,6 +242,10 @@ func (s *TrackLocalStaticSample) Codec() RTPCodecCapability {
 	return s.rtpTrack.Codec()
 }
 
+func (s *TrackLocalStaticSample) SSRC() SSRC {
+	return s.ssrc
+}
+
 // Bind is called by the PeerConnection after negotiation is complete
 // This asserts that the code requested is supported by the remote peer.
 // If so it setups all the state (SSRC and PayloadType) to have a call
@@ -260,6 +277,7 @@ func (s *TrackLocalStaticSample) Bind(t TrackLocalContext) (RTPCodecParameters, 
 		s.sequencer,
 		codec.ClockRate,
 	)
+	s.ssrc = t.SSRC()
 	s.clockRate = float64(codec.RTPCodecCapability.ClockRate)
 	return codec, nil
 }
