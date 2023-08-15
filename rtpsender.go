@@ -16,6 +16,7 @@ import (
 	"github.com/pion/randutil"
 	"github.com/pion/rtcp"
 	"github.com/pion/rtp"
+
 	"github.com/pion/webrtc/v3/internal/util"
 )
 
@@ -264,7 +265,7 @@ func (r *RTPSender) ReplaceTrack(track TrackLocal) error {
 	codec, err := track.Bind(&baseTrackLocalContext{
 		id:              context.ID(),
 		params:          r.api.mediaEngine.getRTPParametersByKind(track.Kind(), []RTPTransceiverDirection{RTPTransceiverDirectionSendonly}),
-		ssrc:            context.SSRC(),
+		ssrc:            SSRC(context.SSRC()),
 		writeStream:     context.WriteStream(),
 		rtcpInterceptor: context.RTCPReader(),
 	})

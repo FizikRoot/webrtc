@@ -65,8 +65,8 @@ func (t *baseTrackLocalContext) HeaderExtensions() []RTPHeaderExtensionParameter
 
 // SSRC requires the negotiated SSRC of this track
 // This track may have multiple if RTX is enabled
-func (t *baseTrackLocalContext) SSRC() SSRC {
-	return t.ssrc
+func (t *baseTrackLocalContext) SSRC() uint32 {
+	return uint32(t.ssrc)
 }
 
 // WriteStream returns the WriteStream for this TrackLocal. The implementer writes the outbound

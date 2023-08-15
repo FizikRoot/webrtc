@@ -11,6 +11,7 @@ import (
 	"sync"
 
 	"github.com/pion/rtp"
+
 	"github.com/pion/webrtc/v3/internal/util"
 	"github.com/pion/webrtc/v3/pkg/media"
 )
@@ -75,7 +76,7 @@ func (s *TrackLocalStaticRTP) Bind(t TrackLocalContext) (RTPCodecParameters, err
 	parameters := RTPCodecParameters{RTPCodecCapability: s.codec}
 	if codec, matchType := codecParametersFuzzySearch(parameters, t.CodecParameters()); matchType != codecMatchNone {
 		s.bindings = append(s.bindings, trackBinding{
-			ssrc:        t.SSRC(),
+			ssrc:        SSRC(t.SSRC()),
 			payloadType: codec.PayloadType,
 			writeStream: t.WriteStream(),
 			id:          t.ID(),
@@ -277,7 +278,7 @@ func (s *TrackLocalStaticSample) Bind(t TrackLocalContext) (RTPCodecParameters, 
 		s.sequencer,
 		codec.ClockRate,
 	)
-	s.ssrc = t.SSRC()
+	s.ssrc = SSRC(t.SSRC())
 	s.clockRate = float64(codec.RTPCodecCapability.ClockRate)
 	return codec, nil
 }
