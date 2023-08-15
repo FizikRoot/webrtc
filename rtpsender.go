@@ -196,7 +196,7 @@ func (r *RTPSender) AddEncoding(track TrackLocal) error {
 }
 
 func (r *RTPSender) addEncoding(track TrackLocal) {
-	ssrc := track.SSRC()
+	ssrc := SSRC(track.SSRC())
 	if ssrc == 0 {
 		ssrc = SSRC(randutil.NewMathRandomGenerator().Uint32())
 	}

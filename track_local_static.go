@@ -126,8 +126,8 @@ func (s *TrackLocalStaticRTP) Kind() RTPCodecType {
 	}
 }
 
-func (s *TrackLocalStaticRTP) SSRC() SSRC {
-	return s.ssrc
+func (s *TrackLocalStaticRTP) SSRC() uint32 {
+	return uint32(s.ssrc)
 }
 
 // Codec gets the Codec of the track
@@ -242,8 +242,8 @@ func (s *TrackLocalStaticSample) Codec() RTPCodecCapability {
 	return s.rtpTrack.Codec()
 }
 
-func (s *TrackLocalStaticSample) SSRC() SSRC {
-	return s.ssrc
+func (s *TrackLocalStaticSample) SSRC() uint32 {
+	return uint32(s.ssrc)
 }
 
 // Bind is called by the PeerConnection after negotiation is complete

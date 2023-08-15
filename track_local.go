@@ -30,7 +30,7 @@ type TrackLocalContext interface {
 
 	// SSRC requires the negotiated SSRC of this track
 	// This track may have multiple if RTX is enabled
-	SSRC() SSRC
+	SSRC() uint32
 
 	// WriteStream returns the WriteStream for this TrackLocal. The implementer writes the outbound
 	// media packets to it
@@ -113,5 +113,5 @@ type TrackLocal interface {
 	Kind() RTPCodecType
 
 	// SSRC gets the SSRC of the track
-	SSRC() SSRC
+	SSRC() uint32
 }
